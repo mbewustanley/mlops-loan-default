@@ -1,5 +1,3 @@
-# mlops-loan-default
-
 # MLOps Loan Default Prediction Pipeline
 
 ## Overview
@@ -256,3 +254,14 @@ The next step is implementing the **data ingestion pipeline** which will:
 - Store it in `data/raw`
 - Track the dataset using DVC
 - Prepare the data for validation and preprocessing
+
+```
+Data Ingestion Pipeline
+
+1️⃣ Create raw data directory if not present
+2️⃣ Download dataset
+3️⃣ Save dataset locally
+4️⃣ Validate download success
+5️⃣ Log ingestion steps
+6️⃣ Return file path to next pipeline stage
+```
