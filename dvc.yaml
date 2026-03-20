@@ -1,0 +1,24 @@
+stages:
+  ingest:
+    cmd: python -m src.pipeline.training_pipeline --stage ingest
+    deps:
+      - src/data_ingestion.py
+      - src/pipeline/training_pipeline.py
+    outs:
+      - data/raw/loan_data.csv
+
+  validate:
+    cmd: python -m src.pipeline.training_pipeline --stage validate
+    deps:
+      - data/raw/loan_data.csv
+      - src/data_validation.py
+      - src/pipeline/training_pipeline.py
+
+  transform:
+    cmd: python -m src.pipeline.training_pipeline --stage transform
+    deps:
+      - data/raw/loan_data.csv
+      - src/data_transformation.py
+      - src/pipeline/training_pipeline.py
+    outs:
+      - data/processed/processed_data.csv

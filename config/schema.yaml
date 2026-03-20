@@ -1,0 +1,9 @@
+columns:
+  loan_amnt: float
+  term: object
+  int_rate: object
+  grade: object
+  emp_length: object
+  home_ownership: object
+  annual_inc: float
+  loan_status: object

@@ -78,6 +78,23 @@ class DataIngestion:
 
             # save dataset to self.raw_data_path
             logger.info(f"attempting to save file to {os_file_path}")
+            ###
+            selected_columns = [
+                'loan_amnt',
+                'term',
+                'int_rate',
+                'grade',
+                'emp_length',
+                'home_ownership',
+                'annual_inc',
+                'loan_status'
+            ]
+
+            df = df[selected_columns]
+            print('-'*50)
+            print(f"reduced dataset shape: {df.shape}")
+            print('-'*50)
+            ###
             df.to_csv(os_file_path, index=False)
 
             logger.info(f"Dataset saved at {os_file_path}")
@@ -129,11 +146,9 @@ class DataIngestion:
             os_file_path = self.save(df)
 
             logger.info(f"Dataset shape: {df.shape}")
-            logger.info(f"Columns: {list(df.columns)}")
+            #logger.info(f"Columns: {list(df.columns)}")
 
             return os_file_path
-        
-
 
         except Exception as e:
             raise PipelineException(f"Error in data ingestion: {e}")
@@ -141,9 +156,9 @@ class DataIngestion:
 
 
 
-from src.data_validation import DataValidation
+#from src.data_validation import DataValidation
 
-if __name__ == "__main__":
+"""if __name__ == "__main__":
     ingestion = DataIngestion()
     data_path = ingestion.download_data()
 
@@ -151,4 +166,4 @@ if __name__ == "__main__":
     validator.validate()
 
     print(f"Data downloaded to: {data_path}")
-    print("Pipeline completed successfully")
+    print("Pipeline completed successfully")"""

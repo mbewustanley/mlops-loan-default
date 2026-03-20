@@ -1,0 +1,53 @@
+schema: '2.0'
+stages:
+  ingest:
+    cmd: python -m src.pipeline.training_pipeline --stage ingest
+    deps:
+    - path: src/data_ingestion.py
+      hash: md5
+      md5: 77913288682246f2aa38ff6e4c5c17a7
+      size: 4926
+    - path: src/pipeline/training_pipeline.py
+      hash: md5
+      md5: ca925b4d7762c8fd6f5a1db5c5fb9aae
+      size: 1164
+    outs:
+    - path: data/raw/loan_data.csv
+      hash: md5
+      md5: 8792a6c3496aefe8f81bccbc8ffe1b98
+      size: 132729232
+  validate:
+    cmd: python -m src.pipeline.training_pipeline --stage validate
+    deps:
+    - path: data/raw/loan_data.csv
+      hash: md5
+      md5: 8792a6c3496aefe8f81bccbc8ffe1b98
+      size: 132729232
+    - path: src/data_validation.py
+      hash: md5
+      md5: 1972cda2509eed2bdd00d0c43e3ae50f
+      size: 1390
+    - path: src/pipeline/training_pipeline.py
+      hash: md5
+      md5: ca925b4d7762c8fd6f5a1db5c5fb9aae
+      size: 1164
+  transform:
+    cmd: python -m src.pipeline.training_pipeline --stage transform
+    deps:
+    - path: data/raw/loan_data.csv
+      hash: md5
+      md5: 8792a6c3496aefe8f81bccbc8ffe1b98
+      size: 132729232
+    - path: src/data_transformation.py
+      hash: md5
+      md5: bf57128e104a0bb6a3e472a35352d874
+      size: 2960
+    - path: src/pipeline/training_pipeline.py
+      hash: md5
+      md5: ca925b4d7762c8fd6f5a1db5c5fb9aae
+      size: 1164
+    outs:
+    - path: data/processed/processed_data.csv
+      hash: md5
+      md5: 77784d4dc7198e7e64228353bd0c577c
+      size: 66074792
