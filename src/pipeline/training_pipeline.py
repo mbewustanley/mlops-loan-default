@@ -2,6 +2,7 @@ import argparse
 from src.data_ingestion import DataIngestion
 from src.data_validation import DataValidation
 from src.data_transformation import DataTransformation
+from src.train import ModelTrainer
 
 
 def run_ingestion():
@@ -37,6 +38,13 @@ if __name__ == "__main__":
 
     elif args.stage == "transform":
         output = run_transformation("data/raw/loan_data.csv")
+
+    elif args.stage == "train":
+        trainer = ModelTrainer(
+            data_path="data/processed/processed_data.csv",
+            model_path="models/RFC_model.pkl"
+        )
+        output = trainer.train()
 
     else:
         raise ValueError("Invalid stage")

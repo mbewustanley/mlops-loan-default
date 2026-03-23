@@ -22,3 +22,12 @@ stages:
       - src/pipeline/training_pipeline.py
     outs:
       - data/processed/processed_data.csv
+
+  train:
+    cmd: python -m src.pipeline.training_pipeline --stage train
+    deps:
+      - data/processed/processed_data.csv
+      - src/train.py
+      - src/pipeline/training_pipeline.py
+    outs:
+      - models/RFC_model.pkl

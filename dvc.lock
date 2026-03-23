@@ -9,8 +9,8 @@ stages:
       size: 4926
     - path: src/pipeline/training_pipeline.py
       hash: md5
-      md5: ca925b4d7762c8fd6f5a1db5c5fb9aae
-      size: 1164
+      md5: 5513246025607f6af4194d900ccc0659
+      size: 1420
     outs:
     - path: data/raw/loan_data.csv
       hash: md5
@@ -29,8 +29,8 @@ stages:
       size: 1390
     - path: src/pipeline/training_pipeline.py
       hash: md5
-      md5: ca925b4d7762c8fd6f5a1db5c5fb9aae
-      size: 1164
+      md5: 5513246025607f6af4194d900ccc0659
+      size: 1420
   transform:
     cmd: python -m src.pipeline.training_pipeline --stage transform
     deps:
@@ -40,14 +40,34 @@ stages:
       size: 132729232
     - path: src/data_transformation.py
       hash: md5
-      md5: bf57128e104a0bb6a3e472a35352d874
-      size: 2960
+      md5: b72716acb9156c3573299c25d0232ed1
+      size: 4429
     - path: src/pipeline/training_pipeline.py
       hash: md5
-      md5: ca925b4d7762c8fd6f5a1db5c5fb9aae
-      size: 1164
+      md5: 5513246025607f6af4194d900ccc0659
+      size: 1420
     outs:
     - path: data/processed/processed_data.csv
       hash: md5
-      md5: 77784d4dc7198e7e64228353bd0c577c
-      size: 66074792
+      md5: e336d4f385d7c573d5d000cab88f9b5d
+      size: 45386204
+  train:
+    cmd: python -m src.pipeline.training_pipeline --stage train
+    deps:
+    - path: data/processed/processed_data.csv
+      hash: md5
+      md5: e336d4f385d7c573d5d000cab88f9b5d
+      size: 45386204
+    - path: src/pipeline/training_pipeline.py
+      hash: md5
+      md5: 5513246025607f6af4194d900ccc0659
+      size: 1420
+    - path: src/train.py
+      hash: md5
+      md5: 81b7ba03804ca75e21c26ae3e0d6e3a4
+      size: 3009
+    outs:
+    - path: models/RFC_model.pkl
+      hash: md5
+      md5: 11a047a17ceb0c660c3216f4931e0daa
+      size: 4500697

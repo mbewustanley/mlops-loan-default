@@ -62,9 +62,42 @@ class DataTransformation:
             df = df.dropna(subset=['loan_status'])
             logger.info("Missing values dropped")
 
+            
             return df
         except Exception as e:
             raise PipelineException(f"Error handling missing values: {e}")
+
+    def clean_ordinal_columns(self, df):
+        try:
+            df = df.copy()
+
+            # ordinal and text having columns; term, emp_length, grade, home_ownership
+            # remove the substring ' months'
+            df['term'] = df['term'].str.replace(' months', '', regex=False)
+            # convert the column to an integer datatype
+            df['term'] = df['term'].astype(int)
+
+            # remove the substrings ' years' and ' year'
+            df['emp_length'] = df['emp_length'].str.replace(' years', '', regex=False)
+            df['emp_length'] = df['emp_length'].str.replace(' year', '', regex=False)
+            # remove useless characters
+            chars_to_remove = r'[+<,\s]'
+            df['emp_length'] = df['emp_length'].str.replace(chars_to_remove, '', regex=True)
+            
+            # Converting A-E to 1-5 in grade column
+            mapping = {'A': 5, 'B': 4, 'C': 3, 'D': 2, 'E': 1}
+            df['grade'] = df['grade'].replace(mapping)
+            df['grade'] = df['term'].astype(int)
+
+            # map home_ownership column with numeric values
+            df['home_ownership'] = df['home_ownership'].map({'MORTGAGE': 0, 'RENT': 1, 'OWN': 2})
+
+
+
+            logger.info("ordinal columns cleaned")
+            return df
+        except Exception as e:
+            raise PipelineException(f"Error cleaning ordinal columns: {e}")
 
     def save_data(self, df):
         try:
@@ -86,6 +119,7 @@ class DataTransformation:
             df = self.process_target(df)
             df = self.clean_int_rate(df)
             df = self.handle_missing_values(df)
+            df = self.clean_ordinal_columns(df)
 
             logger.info(f"Final dataset shape: {df.shape}")
 
