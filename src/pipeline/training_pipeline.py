@@ -3,6 +3,7 @@ from src.data_ingestion import DataIngestion
 from src.data_validation import DataValidation
 from src.data_transformation import DataTransformation
 from src.train import ModelTrainer
+from src.evaluate import ModelEvaluation
 
 
 def run_ingestion():
@@ -45,6 +46,14 @@ if __name__ == "__main__":
             model_path="models/RFC_model.pkl"
         )
         output = trainer.train()
+
+    elif args.stage == "evaluate":
+        evaluator = ModelEvaluation(
+            data_path="data/processed/processed_data.csv",
+            model_path="models/RFC_model.pkl",
+            metrics_path="reports/metrics.json"
+        )
+        output = evaluator.run()
 
     else:
         raise ValueError("Invalid stage")

@@ -31,3 +31,13 @@ stages:
       - src/pipeline/training_pipeline.py
     outs:
       - models/RFC_model.pkl
+
+  evaluate:
+    cmd: python -m src.pipeline.training_pipeline --stage evaluate
+    deps:
+      - data/processed/processed_data.csv
+      - models/RFC_model.pkl
+      - src/evaluate.py
+      - src/pipeline/training_pipeline.py
+    outs:
+      - reports/metrics.json

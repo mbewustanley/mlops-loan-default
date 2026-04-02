@@ -161,6 +161,7 @@ mkdir api
 mkdir tests
 mkdir artifacts
 mkdir configs
+mkdir reports
 
 mkdir .github
 mkdir .github/workflows
@@ -181,6 +182,7 @@ touch src/data_ingestion.py
 touch src/data_validation.py
 touch src/preprocessing.py
 touch src/feature_engineering.py
+touch src/feature_selector.py
 touch src/train.py
 touch src/evaluate.py
 
